@@ -1,0 +1,1 @@
+{"name":"calculatoruae","private":true,"type":"module","scripts":{"build":"node build.mjs","test":"node --test test/*.test.mjs"}}
