@@ -1,0 +1,11 @@
+// Only used if the site is deployed as a Cloudflare Worker with static assets
+// (the "Create application" flow). Cloudflare Pages ignores this file.
+{
+  "name": "calculatoruae",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}
