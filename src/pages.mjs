@@ -79,10 +79,14 @@ const sources = (items) => `<h2>Sources</h2>
 const related = (links) => `<h2>Related calculators and guides</h2>
 <ul>${links.map(([href, text]) => `<li><a href="${href}">${text}</a></li>`).join('')}</ul>`;
 
-const pageHead = (h1, answer, checked) => `<div class="wrap page-head">
+// Labour-law pages were re-checked against the official law text on this date.
+const WORK_CHECKED = '14 November 2026';
+const WORK_CHECKED_ISO = '2026-11-14';
+
+const pageHead = (h1, answer, checked, iso = checked === WORK_CHECKED ? WORK_CHECKED_ISO : '2026-11-13') => `<div class="wrap page-head">
 <h1>${h1}</h1>
 <p class="answer">${answer}</p>
-<p class="checked">Rules last checked: <time datetime="2026-11-13">${checked}</time></p>
+<p class="checked">Rules last checked: <time datetime="${iso}">${checked}</time></p>
 </div>`;
 
 const SECTIONS = ['Work', 'Housing', 'Money', 'Business', 'Visa'];
@@ -122,7 +126,7 @@ export const pages = [
 <h1>UAE calculators that show the rule behind the number</h1>
 <p class="answer">Start with the most used one. Enter your basic salary and dates to see your end of service gratuity, with every step shown. Calculators for rent, loans, VAT, zakat, visas and e-invoicing are listed below.</p>
 </div>
-${toolBlock('gratuity', 'Gratuity estimate', gratuityFields, SITE.checkedText)}
+${toolBlock('gratuity', 'Gratuity estimate', gratuityFields, WORK_CHECKED)}
 <div class="wrap home-section">
 <h2>All calculators</h2>
 ${toolBoard(pages)}
@@ -184,9 +188,9 @@ ${pages
     body: ({ SITE, adSlot, faqHtml }) => `${pageHead(
       'UAE gratuity calculator',
       `End of service gratuity in the UAE private sector is 21 days of basic salary for each of your first five years of service and 30 days of basic salary for each year after that. You need at least one year of continuous service, and the total cannot exceed two years' wage.`,
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
-${toolBlock('gratuity', 'Gratuity estimate', gratuityFields, SITE.checkedText)}
+${toolBlock('gratuity', 'Gratuity estimate', gratuityFields, WORK_CHECKED)}
 <div class="wrap">${adSlot('after-result')}</div>
 <article class="wrap prose">
 <h2>How UAE gratuity is calculated</h2>
@@ -301,7 +305,7 @@ ${adSlot('end')}
     body: ({ SITE, adSlot, faqHtml }) => `${pageHead(
       'UAE leave salary calculator',
       'When a UAE private sector job ends, your unused annual leave is paid in cash on your basic salary. The sum is your monthly basic salary divided by 30, multiplied by your unused leave days. Annual leave is 30 days a year after one year of service.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 ${toolBlock(
   'leave',
@@ -320,7 +324,7 @@ ${days('days', 'Unused leave days', '10', 'Days you have earned and not taken.',
 <p data-out="estimate" role="status"></p>
 <button type="button" data-action="use-estimate">Use this number</button>
 </details>`,
-  SITE.checkedText,
+  WORK_CHECKED,
 )}
 <div class="wrap">${adSlot('after-result')}</div>
 <article class="wrap prose">
@@ -409,7 +413,7 @@ ${adSlot('end')}
     body: ({ SITE, adSlot, faqHtml }) => `${pageHead(
       'UAE notice pay calculator',
       'If a notice period is cut short in the UAE, the side that ended it early pays the other side the wage for the unserved days. The sum is your last total monthly salary divided by 30, multiplied by the notice days not served. Notice periods run from 30 to 90 days.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 ${toolBlock(
   'notice',
@@ -419,7 +423,7 @@ ${toolBlock(
 ${days('notice', 'Notice period in your contract', '30', 'From 30 to 90 days after probation.', 90)}
 ${days('served', 'Notice days served', '0', 'Days worked after notice was given.', 90)}
 </div>`,
-  SITE.checkedText,
+  WORK_CHECKED,
 )}
 <div class="wrap">${adSlot('after-result')}</div>
 <article class="wrap prose">
@@ -513,7 +517,7 @@ ${adSlot('end')}
     body: ({ SITE, adSlot, faqHtml }) => `${pageHead(
       'UAE final settlement calculator',
       'A UAE final settlement is everything your employer owes you when the job ends: gratuity, pay for unused leave, unpaid salary and any notice pay, less lawful deductions. Employers must pay it within 14 days of the contract ending.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 ${toolBlock(
   'settlement',
@@ -555,7 +559,7 @@ ${money('deductions', 'Deductions', '0', 'As claimed by the employer. Not checke
 <option value="no">No</option>
 <option value="yes">Yes, or not sure</option>
 </select></div></div>`,
-  SITE.checkedText,
+  WORK_CHECKED,
 )}
 <div class="wrap">${adSlot('after-result')}</div>
 <article class="wrap prose">
@@ -681,7 +685,7 @@ ${toolLedger(pages)}
     body: ({ SITE, faqHtml }) => `${pageHead(
       'How gratuity is calculated in the UAE',
       'UAE gratuity is your daily basic wage multiplied by 21 days for each of your first five years of service, plus 30 days for each year after that. Your daily basic wage is your last monthly basic salary divided by 30. You must complete one year before anything is due.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 <article class="wrap prose">
 <h2>The four numbers you need</h2>
@@ -760,7 +764,7 @@ ${related([
     body: ({ SITE, faqHtml }) => `${pageHead(
       'Basic salary vs total salary in the UAE',
       'Basic salary is the wage written in your employment contract before allowances. Total salary is basic salary plus allowances such as housing and transport. Gratuity and unused leave are paid on basic salary; notice pay and normal monthly wages use total salary.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 <article class="wrap prose">
 <h2>The two definitions</h2>
@@ -825,7 +829,7 @@ ${related([
     body: ({ SITE, faqHtml }) => `${pageHead(
       'Gratuity on resignation in the UAE',
       'If you resign from a private sector job in the UAE after at least one year of continuous service, you receive full gratuity. The current labour law, in force since 2 February 2022, does not reduce gratuity for resigning.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 <article class="wrap prose">
 <h2>What changed</h2>
@@ -884,7 +888,7 @@ ${related([
     body: ({ SITE, faqHtml }) => `${pageHead(
       'What a UAE final settlement includes',
       'A final settlement in the UAE is the total your employer owes you when your job ends. It includes end of service gratuity, pay for unused annual leave, salary for days worked, and notice pay where it applies, less any lawful deductions. It must be paid within 14 days.',
-      SITE.checkedText,
+      WORK_CHECKED,
     )}
 <article class="wrap prose">
 <h2>The lines on a settlement</h2>
@@ -937,7 +941,7 @@ ${related([
 <h2>How we check rules</h2>
 <ol>
 <li>Each calculator applies a named article of a UAE law or regulation. The article is listed under Sources on the page.</li>
-<li>Every rule is stored with its source and the date it was last checked. The date is shown on each page. The current check date is ${SITE.checkedText}.</li>
+<li>Every rule is stored with its source and the date it was last checked. The date is shown on each page.</li>
 <li>The maths behind each calculator is covered by automated tests using worked examples, including edge cases such as service of exactly one year.</li>
 <li>When a law changes, the calculator, examples and check date are updated together.</li>
 </ol>
